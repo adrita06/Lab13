@@ -90,9 +90,6 @@ public class Flight extends FlightDistance {
      * @param customer     customer in which tickets are to be added
      * @param numOfTickets number of tickets to add
      */
-    void addTicketsToExistingCustomer(Customer customer, int numOfTickets) {
-        customer.addExistingFlightToCustomerList(customerIndex, numOfTickets);
-    }
 
     /***
      * Checks if the specified customer is already registered in the FLight's array list
@@ -103,7 +100,8 @@ public class Flight extends FlightDistance {
     boolean isCustomerAlreadyAdded(List<Customer> customersList, Customer customer) {
         boolean isAdded = false;
         for (Customer customer1 : customersList) {
-            if (customer1.getUserID().equals(customer.getUserID())) {
+            boolean equals = customer1.getUserID().equals(customer.getUserID());
+            if (equals) {
                 isAdded = true;
                 customerIndex = customersList.indexOf(customer1);
                 break;
@@ -176,7 +174,8 @@ public class Flight extends FlightDistance {
         Iterator<Flight> list = flightList.iterator();
         while (list.hasNext()) {
             Flight flight = list.next();
-            if (flight.getFlightNumber().equalsIgnoreCase(flightNumber)) {
+            boolean flightNum = flight.getFlightNumber().equalsIgnoreCase(flightNumber);
+            if (flightNum) {
                 isFound = true;
                 break;
             }

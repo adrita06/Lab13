@@ -31,7 +31,8 @@ public class FlightReservation implements DisplayClass {
     void bookFlight(String flightNo, int numOfTickets, String userID) {
         boolean isFound = false;
         for (Flight f1 : flight.getFlightList()) {
-            if (flightNo.equalsIgnoreCase(f1.getFlightNumber())) {
+            boolean flightNoEquals = flightNo.equalsIgnoreCase(f1.getFlightNumber());
+            if (flightNoEquals) {
                 for (Customer customer : Customer.customerCollection) {
                     if (userID.equals(customer.getUserID())) {
                         isFound = true;
@@ -73,7 +74,8 @@ public class FlightReservation implements DisplayClass {
         boolean isFound = false;
         for (Customer customer : Customer.customerCollection) {
             if (userID.equals(customer.getUserID())) {
-                if (customer.getFlightsRegisteredByUser().size() != 0) {
+                int size = customer.getFlightsRegisteredByUser().size();
+                if (size != 0) {
                     System.out.printf("%50s %s Here is the list of all the Flights registered by you %s", " ", "++++++++++++++", "++++++++++++++");
                     displayFlightsRegisteredByOneUser(userID);
                     System.out.print("Enter the Flight Number of the Flight you want to cancel : ");
@@ -122,7 +124,8 @@ public class FlightReservation implements DisplayClass {
     boolean isFlightAlreadyAddedToCustomerList(List<Flight> flightList, Flight flight) {
         boolean addedOrNot = false;
         for (Flight flight1 : flightList) {
-            if (flight1.getFlightNumber().equalsIgnoreCase(flight.getFlightNumber())) {
+            boolean flight1Equals = flight1.getFlightNumber().equalsIgnoreCase(flight.getFlightNumber());
+            if (flight1Equals) {
                 this.flightIndexInFlightList = flightList.indexOf(flight1);
                 addedOrNot = true;
                 break;
@@ -134,7 +137,8 @@ public class FlightReservation implements DisplayClass {
     String flightStatus(Flight flight) {
         boolean isFlightAvailable = false;
         for (Flight list : flight.getFlightList()) {
-            if (list.getFlightNumber().equalsIgnoreCase(flight.getFlightNumber())) {
+            boolean flightNumEquals = list.getFlightNumber().equalsIgnoreCase(flight.getFlightNumber());
+            if (flightNumEquals) {
                 isFlightAvailable = true;
                 break;
             }
@@ -205,7 +209,8 @@ public class FlightReservation implements DisplayClass {
         System.out.println();
         for (Flight flight : flight.getFlightList()) {
             List<Customer> c = flight.getListOfRegisteredCustomersInAFlight();
-            if (flight.getFlightNumber().equalsIgnoreCase(flightNum)) {
+            boolean flightNumEquals = flight.getFlightNumber().equalsIgnoreCase(flightNum);
+            if (flightNumEquals) {
                 displayHeaderForUsers(flight, c);
             }
         }
