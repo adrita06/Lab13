@@ -151,11 +151,6 @@ public class FlightReservation implements DisplayClass {
         }
     }
 
-    /*toString() Method for displaying number of flights registered by single user...*/
-    public String toString(int serialNum, Flight flights, Customer customer) {
-        return String.format("| %-5d| %-41s | %-9s | \t%-9d | %-21s | %-22s | %-10s  |   %-6sHrs |  %-4s  | %-10s |", serialNum, flights.getFlightSchedule(), flights.getFlightNumber(), customer.numOfTicketsBookedByUser.get(serialNum - 1), flights.getFromWhichCity(), flights.getToWhichCity(), flights.fetchArrivalTime(), flights.getFlightTime(), flights.getGate(), flightStatus(flights));
-    }
-
     @Override
     public void displayFlightsRegisteredByOneUser(String userID) {
         System.out.println();
@@ -167,18 +162,11 @@ public class FlightReservation implements DisplayClass {
             int size = customer.getFlightsRegisteredByUser().size();
             if (userID.equals(customer.getUserID())) {
                 for (int i = 0; i < size; i++) {
-                    System.out.println(toString((i + 1), f.get(i), customer));
+                    System.out.println(String.format("| %-5d| %-41s | %-9s | \t%-9d | %-21s | %-22s | %-10s  |   %-6sHrs |  %-4s  | %-10s |", i+1, f.get(i).getFlightSchedule(), f.get(i).getFlightNumber(), customer.numOfTicketsBookedByUser.get(i), f.get(i).getFromWhichCity(), f.get(i).getToWhichCity(), f.get(i).fetchArrivalTime(), f.get(i).getFlightTime(), f.get(i).getGate(), flightStatus(f.get(i))));
                     System.out.print("+------+-------------------------------------------+-----------+------------------+-----------------------+------------------------+---------------------------+-------------+--------+-----------------+\n");
                 }
             }
         }
-    }
-
-    /*overloaded toString() method for displaying all users in a flight....*/
-
-    public String toString(int serialNum, Customer customer, int index) {
-        return String.format("%10s| %-10d | %-10s | %-32s | %-7s | %-27s | %-35s | %-23s |       %-7s  |", "", (serialNum + 1), customer.randomIDDisplay(customer.getUserID()), customer.getName(),
-                customer.getAge(), customer.getEmail(), customer.getAddress(), customer.getPhone(), customer.numOfTicketsBookedByUser.get(index));
     }
 
     @Override
@@ -189,7 +177,8 @@ public class FlightReservation implements DisplayClass {
         System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+----------------+\n", "");
         int size = flight.getListOfRegisteredCustomersInAFlight().size();
         for (int i = 0; i < size; i++) {
-            System.out.println(toString(i, c.get(i), flightIndex(c.get(i).flightsRegisteredByUser, flight)));
+            System.out.println(String.format("%10s| %-10d | %-10s | %-32s | %-7s | %-27s | %-35s | %-23s |       %-7s  |", "", (i + 1), c.get(i).randomIDDisplay(c.get(i).getUserID()), c.get(i).getName(),
+                    c.get(i).getAge(), c.get(i).getEmail(), c.get(i).getAddress(), c.get(i).getPhone(), c.get(i).numOfTicketsBookedByUser.get(flightIndex(c.get(i).flightsRegisteredByUser,flight))));
             System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+----------------+\n", "");
         }
     }
@@ -226,6 +215,4 @@ public class FlightReservation implements DisplayClass {
             }
         }
     }
-
-
 }
