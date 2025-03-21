@@ -26,7 +26,6 @@ public class User {
 
     public static void main(String[] args) {
         int countNumOfUsers = 1;
-        RolesAndPermissions r1 = new RolesAndPermissions();
         Flight f1 = new Flight();
         FlightReservation bookingAndReserving = new FlightReservation();
         Customer c1 = new Customer();
@@ -68,7 +67,7 @@ public class User {
                 System.out.println();
 
                 /* Checking the RolesAndPermissions...... */
-                int privilegedUserOrNot = r1.isPrivilegedUserOrNot(username, password);
+                int privilegedUserOrNot = isPrivilegedUserOrNot(username, password);
                 if (privilegedUserOrNot == -1) {
                     System.out.printf(
                             "\n%20sERROR!!! Unable to login Cannot find user with the entered credentials.... Try Creating New Credentials or get yourself register by pressing 4....\n",
@@ -203,7 +202,7 @@ public class User {
                 String username = read1.nextLine();
                 System.out.print("Enter the Password to Register :     ");
                 String password = read1.nextLine();
-                while (r1.isPrivilegedUserOrNot(username, password) != -1) {
+                while (isPrivilegedUserOrNot(username, password) != -1) {
                     System.out.print("ERROR!!! Admin with same UserName already exist. Enter new UserName:   ");
                     username = read1.nextLine();
                     System.out.print("Enter the Password Again:   ");
@@ -221,7 +220,7 @@ public class User {
                 String userName = read1.nextLine();
                 System.out.print("Enter the Password : \t");
                 String password = read1.nextLine();
-                String[] result = r1.isPassengerRegistered(userName, password).split("-");
+                String[] result = isPassengerRegistered(userName, password).split("-");
 
                 if (Integer.parseInt(result[0]) == 1) {
                     int desiredChoice;
@@ -392,5 +391,42 @@ public class User {
 
     public static List<Customer> getCustomersCollection() {
         return customersCollection;
+    }
+
+    /**
+     * Checks if the admin with specified credentials is registered or not.
+     * @param username of the imaginary admin
+     * @param password of the imaginary admin
+     * @return -1 if admin not found, else index of the admin in the array.
+     */
+    public static int isPrivilegedUserOrNot(String username, String password) {
+        int isFound = -1;
+        for (int i = 0; i < adminUserNameAndPassword.length; i++) {
+            if (username.equals(adminUserNameAndPassword[i][0])) {
+                if (password.equals(adminUserNameAndPassword[i][1])) {
+                    isFound = i;
+                    break;
+                }
+            }
+        }
+        return isFound;
+    }
+    /**
+     * Checks if the passenger with specified credentials is registered or not.
+     * @param email of the specified passenger
+     * @param password of the specified passenger
+     * @return 1 with the userID if the passenger is registered, else 0
+     */
+    public static String isPassengerRegistered(String email, String password) {
+        String isFound = "0";
+        for (Customer c : Customer.customerCollection) {
+            if (email.equals(c.getEmail())) {
+                if (password.equals(c.getPassword())) {
+                    isFound = "1-" + c.getUserID();
+                    break;
+                }
+            }
+        }
+        return isFound;
     }
 }
