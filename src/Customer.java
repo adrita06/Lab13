@@ -68,7 +68,7 @@ public class Customer {
         String name = read.nextLine();
         System.out.print("Enter your email address :\t");
         String email = read.nextLine();
-        while (isUniqueData(email)) {
+        while (isUniqueData(getEmail())) {
             System.out.println(
                     "ERROR!!! User with the same email already exists... Use new email or login using the previous credentials....");
             System.out.print("Enter your email address :\t");
@@ -82,7 +82,7 @@ public class Customer {
         String address = read.nextLine();
         System.out.print("Enter your age :\t");
         int age = read.nextInt();
-        customerCollection.add(new Customer(name, email, password, phone, address, age));
+        customerCollection.add(new Customer(getName(), getEmail(), getPassword(), getPhone(), getAddress(), getAge()));
     }
 
     /**
@@ -95,7 +95,22 @@ public class Customer {
      */
     private String toString(int i) {
         return String.format("%10s| %-10d | %-10s | %-32s | %-7s | %-27s | %-35s | %-23s |", "", i,
-                randomIDDisplay(userID), name, age, email, address, phone);
+                randomIDDisplay(getUserID()), getName(), getAge(), getEmail(),getAddress(), getPhone());
+    }
+    /**
+     * Returns true if the given emailID is already registered, false otherwise
+     *
+     * @param emailID to be checked in the list
+     */
+    public boolean isUniqueData(String emailID) {
+        boolean isUnique = false;
+        for (Customer c : customerCollection) {
+            if (emailID.equals(c.getEmail())) {
+                isUnique = true;
+                break;
+            }
+        }
+        return isUnique;
     }
 
     /**
@@ -126,22 +141,6 @@ public class Customer {
         }
     }
 
-    /**
-     * Returns true if the given emailID is already registered, false otherwise
-     *
-     * @param emailID to be checked in the list
-     */
-    public boolean isUniqueData(String emailID) {
-        boolean isUnique = false;
-        for (Customer c : customerCollection) {
-            if (emailID.equals(c.getEmail())) {
-                isUnique = true;
-                break;
-            }
-        }
-        return isUnique;
-    }
-
     public void editUserInfo(String ID) {
         boolean isFound = false;
         Scanner read = new Scanner(System.in);
@@ -151,13 +150,13 @@ public class Customer {
                 System.out.print("\nEnter the new name of the Passenger:\t");
                 String name = read.nextLine();
                 c.setName(name);
-                System.out.print("Enter the new email address of Passenger " + name + ":\t");
+                System.out.print("Enter the new email address of Passenger " + getName() + ":\t");
                 c.setEmail(read.nextLine());
-                System.out.print("Enter the new Phone number of Passenger " + name + ":\t");
+                System.out.print("Enter the new Phone number of Passenger " + getName() + ":\t");
                 c.setPhone(read.nextLine());
-                System.out.print("Enter the new address of Passenger " + name + ":\t");
+                System.out.print("Enter the new address of Passenger " + getName() + ":\t");
                 c.setAddress(read.nextLine());
-                System.out.print("Enter the new age of Passenger " + name + ":\t");
+                System.out.print("Enter the new age of Passenger " + getName() + ":\t");
                 c.setAge(read.nextInt());
                 displayCustomersData(false);
                 break;

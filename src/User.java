@@ -128,7 +128,7 @@ public class User {
                             c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Update its Data :\t");
                             String customerID = read1.nextLine();
-                            if (customersCollection.size() > 0) {
+                            if (getCustomersCollection().size() > 0) {
                                 c1.editUserInfo(customerID);
                             } else {
                                 System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", customerID);
@@ -142,7 +142,7 @@ public class User {
                             c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Delete its Data :\t");
                             String customerID = read1.nextLine();
-                            if (customersCollection.size() > 0) {
+                            if (getCustomersCollection().size() > 0) {
                                 c1.deleteUser(customerID);
                             } else {
                                 System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", customerID);
@@ -155,7 +155,7 @@ public class User {
                             System.out.print(
                                     "\n\nEnter the ID of the user to display all flights registered by that user...");
                             String id = read1.nextLine();
-                            bookingAndReserving.displayFlightsRegisteredByOneUser(id);
+                            bookingAndReserving.fd.displayFlightsRegisteredByOneUser(id);
                         } else if (desiredOption == 7) {
                             System.out.print(
                                     "Do you want to display Passengers of all flights or a specific flight.... 'Y/y' for displaying all flights and 'N/n' to look for a"
@@ -163,13 +163,13 @@ public class User {
                                             " specific flight.... ");
                             char choice = read1.nextLine().charAt(0);
                             if ('y' == choice || 'Y' == choice) {
-                                bookingAndReserving.displayRegisteredUsersForAllFlight();
+                                bookingAndReserving.fd.displayRegisteredUsersForAllFlight();
                             } else if ('n' == choice || 'N' == choice) {
                                 f1.displayFlightSchedule();
                                 System.out.print(
                                         "Enter the Flight Number to display the list of passengers registered in that flight... ");
                                 String flightNum = read1.nextLine();
-                                bookingAndReserving.displayRegisteredUsersForASpecificFlight(flightNum);
+                                bookingAndReserving.fd.displayRegisteredUsersForASpecificFlight(flightNum);
                             } else {
                                 System.out.println("Invalid Choice...No Response...!");
                             }
@@ -276,7 +276,7 @@ public class User {
                             bookingAndReserving.cancelFlight(result[1]);
                         } else if (desiredChoice == 6) {
 
-                            bookingAndReserving.displayFlightsRegisteredByOneUser(result[1]);
+                            bookingAndReserving.fd.displayFlightsRegisteredByOneUser(result[1]);
                         } else {
 
                             if (desiredChoice != 0) {
@@ -390,7 +390,7 @@ public class User {
     // Getters ************************************************************
 
     public static List<Customer> getCustomersCollection() {
-        return customersCollection;
+        return getCustomersCollection();
     }
 
     /**
