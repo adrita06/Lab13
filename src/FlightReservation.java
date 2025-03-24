@@ -39,6 +39,7 @@ public class FlightReservation {
         Customer targetCustomer = null;
         targetFlight = findFlight(flightNo,targetFlight);
         targetCustomer = findCustomer(userID,targetCustomer);
+        CustomerFlightManagement cfm=new CustomerFlightManagement(targetCustomer);
 
         if (targetFlight==null) {
             System.out.printf("\n %50s You've booked %d tickets for Flight \"%5s\"...", "", numOfTickets, flightNo.toUpperCase());
@@ -56,10 +57,10 @@ public class FlightReservation {
             addNumberOfTicketsToAlreadyBookedFlight(targetCustomer, numOfTickets);
             int i = flightIndex(flight.getFlightList(), flight);
             if (i != -1) {
-                targetCustomer.addExistingFlightToCustomerList(i, numOfTickets);
+                cfm.addExistingFlightToCustomerList(i, numOfTickets);
             }
         } else {
-            targetCustomer.addNewFlightToCustomerList(targetFlight);
+            cfm.addNewFlightToCustomerList(targetFlight);
             targetCustomer.numOfTicketsBookedByUser.add(numOfTickets);
         }
         System.out.printf("\n %50s You've booked %d tickets for Flight \"%5s\"...", "", numOfTickets, flightNo.toUpperCase());
@@ -75,7 +76,7 @@ public class FlightReservation {
     }
 
     private Customer findCustomer(String userID,Customer targetCustomer){
-        for (Customer customer : Customer.customerCollection) {
+        for (Customer customer : CustomerManagement.customerCollection) {
             if (userID.equals(customer.getUserID())) {
                 targetCustomer = customer;
                 return targetCustomer;
@@ -99,7 +100,7 @@ public class FlightReservation {
         Customer targetCustomer = null;
         Flight targetFlight = null;
         boolean isFound = false;
-        for (Customer customer : Customer.customerCollection) {
+        for (Customer customer : CustomerManagement.customerCollection) {
             if (userID.equals(customer.getUserID())) {
                 size = customer.getFlightsRegisteredByUser().size();
                 targetCustomer = customer;

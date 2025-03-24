@@ -13,7 +13,7 @@ public class FlightReservationDisplay implements DisplayClass{
         System.out.print("+------+-------------------------------------------+-----------+------------------+-----------------------+------------------------+---------------------------+-------------+--------+-----------------+\n");
         System.out.printf("| Num  | FLIGHT SCHEDULE\t\t\t   | FLIGHT NO |  Booked Tickets  | \tFROM ====>>       | \t====>> TO\t   | \t    ARRIVAL TIME       | FLIGHT TIME |  GATE  |  FLIGHT STATUS  |%n");
         System.out.print("+------+-------------------------------------------+-----------+------------------+-----------------------+------------------------+---------------------------+-------------+--------+-----------------+\n");
-        for (Customer customer : Customer.customerCollection) {
+        for (Customer customer : CustomerManagement.customerCollection) {
             List<Flight> f = customer.getFlightsRegisteredByUser();
             int size = customer.getFlightsRegisteredByUser().size();
             if (userID.equals(customer.getUserID())) {
@@ -33,8 +33,7 @@ public class FlightReservationDisplay implements DisplayClass{
         System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+----------------+\n", "");
         int size = flight.getListOfRegisteredCustomersInAFlight().size();
         for (int i = 0; i < size; i++) {
-            System.out.println(String.format("%10s| %-10d | %-10s | %-32s | %-7s | %-27s | %-35s | %-23s |       %-7s  |", "", (i + 1), c.get(i).randomIDDisplay(c.get(i).getUserID()), c.get(i).getName(),
-                    c.get(i).getAge(), c.get(i).getEmail(), c.get(i).getAddress(), c.get(i).getPhone(), c.get(i).numOfTicketsBookedByUser.get(flightReservation.flightIndex(c.get(i).flightsRegisteredByUser,flight))));
+
             System.out.printf("%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+----------------+\n", "");
         }
     }
