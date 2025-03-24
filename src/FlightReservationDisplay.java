@@ -1,8 +1,12 @@
 import java.util.List;
 
 public class FlightReservationDisplay implements DisplayClass{
-    Flight flight = new Flight();
-    FlightReservation flightReservation = new FlightReservation();
+    private Flight flight = new Flight();
+    private FlightReservation flightReservation;
+
+    public FlightReservationDisplay() {
+        this.flightReservation = new FlightReservation(this); // Inject dependency
+    }
     @Override
     public void displayFlightsRegisteredByOneUser(String userID) {
         System.out.println();
@@ -75,5 +79,7 @@ public class FlightReservationDisplay implements DisplayClass{
         }
     }
 
-
+    public FlightReservation getFlightReservation() {
+        return flightReservation;
+    }
 }

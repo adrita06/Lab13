@@ -12,8 +12,12 @@ import java.util.Scanner;
 public class FlightReservation {
 
     //        ************************************************************ Fields ************************************************************
-    Flight flight = new Flight();
-    FlightReservationDisplay fd = new FlightReservationDisplay();
+    private FlightReservationDisplay fd;
+    private Flight flight = new Flight();
+
+    public FlightReservation(FlightReservationDisplay fd) {
+        this.fd = fd;
+    }
     int flightIndexInFlightList;
 
     //        ************************************************************ Behaviours/Methods ************************************************************
@@ -29,29 +33,18 @@ public class FlightReservation {
      * @param numOfTickets number of tickets to be booked
      * @param userID       userID of the user which is booking the flight
      */
+
     void bookFlight(String flightNo, int numOfTickets, String userID) {
-        boolean customerFound = false;
-        boolean flightFound = false;
         Flight targetFlight = null;
         Customer targetCustomer = null;
-        Flight flightNoEquals;
-        for (Flight f1 : flight.getFlightList()) {
-            if (flightNo.equalsIgnoreCase(f1.getFlightNumber())) {
-                flightFound = true;
-                targetFlight = f1;
-            }
-        }
-        for (Customer customer : Customer.customerCollection) {
-            if (userID.equals(customer.getUserID())) {
-                customerFound = true;
-                targetCustomer = customer;
-            }
-        }
-        if (!flightFound) {
+        targetFlight = findFlight(flightNo,targetFlight);
+        targetCustomer = findCustomer(userID,targetCustomer);
+
+        if (targetFlight==null) {
             System.out.printf("\n %50s You've booked %d tickets for Flight \"%5s\"...", "", numOfTickets, flightNo.toUpperCase());
             return;
         }
-        if (!customerFound) {
+        if (targetCustomer==null) {
             System.out.println("Invalid Flight Number...! No flight with the  ID \"" + flightNo + "\" was found...");
             return;
         }
@@ -70,6 +63,25 @@ public class FlightReservation {
             targetCustomer.numOfTicketsBookedByUser.add(numOfTickets);
         }
         System.out.printf("\n %50s You've booked %d tickets for Flight \"%5s\"...", "", numOfTickets, flightNo.toUpperCase());
+    }
+    private Flight findFlight(String flightNo,Flight targetFlight){
+        for (Flight f1 : flight.getFlightList()) {
+            if (flightNo.equalsIgnoreCase(f1.getFlightNumber())) {
+                targetFlight = f1;
+                return targetFlight;
+            }
+        }
+        return null;
+    }
+
+    private Customer findCustomer(String userID,Customer targetCustomer){
+        for (Customer customer : Customer.customerCollection) {
+            if (userID.equals(customer.getUserID())) {
+                targetCustomer = customer;
+                return targetCustomer;
+            }
+        }
+        return null;
     }
 
 

@@ -27,7 +27,7 @@ public class User {
     public static void main(String[] args) {
         int countNumOfUsers = 1;
         Flight f1 = new Flight();
-        FlightReservation bookingAndReserving = new FlightReservation();
+        FlightReservationDisplay fd = new FlightReservationDisplay();
         Customer c1 = new Customer();
         f1.flightScheduler();
         Scanner read = new Scanner(System.in);
@@ -155,7 +155,7 @@ public class User {
                             System.out.print(
                                     "\n\nEnter the ID of the user to display all flights registered by that user...");
                             String id = read1.nextLine();
-                            bookingAndReserving.fd.displayFlightsRegisteredByOneUser(id);
+                            fd.displayFlightsRegisteredByOneUser(id);
                         } else if (desiredOption == 7) {
                             System.out.print(
                                     "Do you want to display Passengers of all flights or a specific flight.... 'Y/y' for displaying all flights and 'N/n' to look for a"
@@ -163,13 +163,13 @@ public class User {
                                             " specific flight.... ");
                             char choice = read1.nextLine().charAt(0);
                             if ('y' == choice || 'Y' == choice) {
-                                bookingAndReserving.fd.displayRegisteredUsersForAllFlight();
+                                fd.displayRegisteredUsersForAllFlight();
                             } else if ('n' == choice || 'N' == choice) {
                                 f1.displayFlightSchedule();
                                 System.out.print(
                                         "Enter the Flight Number to display the list of passengers registered in that flight... ");
                                 String flightNum = read1.nextLine();
-                                bookingAndReserving.fd.displayRegisteredUsersForASpecificFlight(flightNum);
+                                fd.displayRegisteredUsersForASpecificFlight(flightNum);
                             } else {
                                 System.out.println("Invalid Choice...No Response...!");
                             }
@@ -252,7 +252,7 @@ public class User {
                                         "ERROR!! You can't book more than 10 tickets at a time for single flight....Enter number of tickets again : ");
                                 numOfTickets = read.nextInt();
                             }
-                            bookingAndReserving.bookFlight(flightToBeBooked, numOfTickets, result[1]);
+                            fd.getFlightReservation().bookFlight(flightToBeBooked, numOfTickets, result[1]);
                         } else if (desiredChoice == 2) {
 
                             c1.editUserInfo(result[1]);
@@ -273,10 +273,10 @@ public class User {
                             f1.displayMeasurementInstructions();
                         } else if (desiredChoice == 5) {
 
-                            bookingAndReserving.cancelFlight(result[1]);
+                            fd.getFlightReservation().cancelFlight(result[1]);
                         } else if (desiredChoice == 6) {
 
-                            bookingAndReserving.fd.displayFlightsRegisteredByOneUser(result[1]);
+                            fd.displayFlightsRegisteredByOneUser(result[1]);
                         } else {
 
                             if (desiredChoice != 0) {
@@ -390,7 +390,7 @@ public class User {
     // Getters ************************************************************
 
     public static List<Customer> getCustomersCollection() {
-        return getCustomersCollection();
+        return customersCollection;
     }
 
     /**
